@@ -4,7 +4,7 @@ import com.stefanini.hackaton.dto.JogadorDto;
 import com.stefanini.hackaton.entities.Jogador;
 
 public class JogadorParserDTO extends AbstractParser<JogadorDto, Jogador>{
-
+	
 	@Override
 	public JogadorDto toDTO(Jogador entity) {
 		JogadorDto dto = new JogadorDto();
