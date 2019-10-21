@@ -1,0 +1,40 @@
+<div ng-controller="JogadorController as jogadorCtrl" class="row">
+	<form name="form" novalidate class="simple-form" ng-submit="jogadorCtrl.cadastrar(jogadorCtrl.jogador)">
+		<div class="form-group">
+			<label>Login</label>
+			<input id="nickname" name="nickname" type="text" class="form-control" placeholder="Nickname" ng-required="true" ng-model="jogadorCtrl.jogador.nickname">
+		    <div ng-show="form.$submitted || form.nickname.$touched">
+		      <div class="message-validate" ng-show="form.nickname.$error.required">Ops! Nickname obrigatorio</div>
+		      <div class="message-validate" ng-show="form.$submitted">{{ jogadorCtrl.mensagem }}</div>
+		    </div>
+		</div>
+		<div class="form-group">
+			<label>Senha</label>
+			<input id="senha-jogador" name="password" type="password" class="form-control" placeholder="Senha" ng-required="true" ng-minlength="6" ng-maxlength="8" ng-model="jogadorCtrl.jogador.senha">
+		    <div ng-show="form.$submitted || form.password.$touched">
+		      <div class="message-validate" ng-show="form.password.$error.required">Informe a senha</div>
+		      <div class="message-validate" ng-show="form.password.$error.minlength">O minimo de caracter é 6</div>
+		      <div class="message-validate" ng-show="form.password.$error.maxlength">O maximo de caracter é 8</div>
+		    </div>
+		</div>
+		<div ng-controller="HeroiController as heroiCtrl" ng-init="heroiCtrl.init()" class="form-group">
+			<label>Heroi</label>
+			<select name="heroi" id="heroi" class="form-control"
+				ng-options="heroi as heroi.nome for heroi in heroiCtrl.herois" ng-required="true" ng-model="jogadorCtrl.jogador.personagem"></select>
+		    <div ng-show="form.$submitted || form.heroi.$touched">
+		      <div class="message-validate" ng-show="form.heroi.$error.required">Informe o heroi</div>
+		    </div>
+			<div ng-if="jogadorCtrl.jogador.personagem">
+				<span>Vida:{{jogadorCtrl.jogador.personagem.vida}}</span><br>
+				<span>Ataque:{{jogadorCtrl.jogador.personagem.ataque}}</span><br>
+				<span>Forca:{{jogadorCtrl.jogador.personagem.forca}}</span><br>
+				<span>Inteligencia:{{jogadorCtrl.jogador.personagem.inteligencia}}</span><br>
+				<span>Defesa:{{jogadorCtrl.jogador.personagem.defesa}}</span><br>
+				<span>Velocidade:{{jogadorCtrl.jogador.personagem.velocidade}}</span><br>
+				<span>Poder:{{jogadorCtrl.jogador.personagem.poder}}</span><br>
+			</div>
+		</div>
+		<button type="submit" class="btn btn-success">Cadastrar</button>
+		<button ng-click="jogadorCtrl.irLogin('/login')" class="btn btn-primary">Voltar</button>
+	</form>
+</div>

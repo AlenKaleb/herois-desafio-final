@@ -38,8 +38,8 @@ public class JogadorDto implements Serializable{
 	public Heroi getPersonagem() {
 		return personagem;
 	}
-	public void setPersonagem(Heroi personagem) {
-		this.personagem = personagem;
+	public void setPersonagem(Heroi heroi) {
+		this.personagem = heroi;
 	}
 	
 }

@@ -2,9 +2,18 @@ package com.stefanini.hackaton.dto;
 
 public class LoginDto {
 	
+	private Integer id;
 	private String nickname;
 	private String senha;
 	
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
 	public String getNickname() {
 		return nickname;
 	}

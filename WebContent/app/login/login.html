@@ -1,0 +1,23 @@
+<div ng-controller="LoginController as loginCtrl" class="row">
+	<div ng-show="form.$submitted">
+      <div class="message-validate" ng-show="loginCtrl.message">Ops! Nickname obrigatorio</div>
+    </div>
+	<form name="form" novalidate class="simple-form" ng-submit="loginCtrl.login(loginCtrl.usuario)">
+		<div class="form-group">
+			<label>Login</label>
+			<input id="nickname-login" type="texto" class="form-control" placeholder="Nickname" ng-required="true" ng-model="loginCtrl.usuario.nickname">
+			<div ng-show="form.$submitted || form.nickname.$touched">
+		      <div class="message-validate" ng-show="form.nickname.$error.required">Ops! Nickname obrigatorio</div>
+		    </div>
+		</div>
+		<div class="form-group">
+			<label>Senha</label>
+			<input id="senha-login" type="password" class="form-control" placeholder="Password" ng-required="true" ng-model="loginCtrl.usuario.senha">
+			<div ng-show="form.$submitted || form.password.$touched">
+		      <div class="message-validate" ng-show="form.password.$error.required">Informe a senha</div>
+		    </div>
+		</div>
+		<button type="submit" class="btn btn-success">Entrar</button>
+		<button class="btn btn-primary" ng-click="loginCtrl.irCadastrar('/cadastro-jogador')">Cadastrar</button>
+	</form>
+</div>

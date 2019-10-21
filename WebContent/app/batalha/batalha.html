@@ -1,0 +1,25 @@
+<div ng-controller="BatalhaController as batalhaCtrl" ng-init="batalhaCtrl.init()" class="row">
+	<div>
+		Bem vindo a tela de batalha {{ batalhaCtrl.message }}
+		<form name="form" novalidate class="simple-form" ng-submit="batalhaCtrl.batalhar(batalhaCtrl.jogadorPrimario, batalhaCtrl.jogadorSecundario)">
+			<div class="form-group">
+				<label>Selecionar o segundo jogador</label>
+				<select name="jogador" class="form-control"
+					ng-options="jogador as jogador.nickname for jogador in batalhaCtrl.jogadores" ng-required="true" ng-model="batalhaCtrl.jogadorSecundario"></select>
+			    <div ng-show="form.$submitted || form.jogador.$touched">
+			      <div class="message-validate" ng-show="form.jogador.$error.required">Informe o jogador</div>
+			    </div>
+				<div ng-if="batalhaCtrl.jogadorSecundario">
+					<span>Vida:{{batalhaCtrl.jogadorSecundario.personagem.vida}}</span><br>
+					<span>Ataque:{{batalhaCtrl.jogadorSecundario.personagem.ataque}}</span><br>
+					<span>Forca:{{batalhaCtrl.jogadorSecundario.personagem.forca}}</span><br>
+					<span>Inteligencia:{{batalhaCtrl.jogadorSecundario.personagem.inteligencia}}</span><br>
+					<span>Defesa:{{batalhaCtrl.jogadorSecundario.personagem.defesa}}</span><br>
+					<span>Velocidade:{{batalhaCtrl.jogadorSecundario.personagem.velocidade}}</span><br>
+					<span>Poder:{{batalhaCtrl.jogadorSecundario.personagem.poder}}</span><br>
+				</div>
+			</div>
+			<button type="submit" class="btn btn-success">Lutar</button>
+		</form>
+	</div>
+</div>

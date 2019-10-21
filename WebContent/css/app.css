@@ -17,6 +17,9 @@ h3 {
 .selecionado {
 	background-color: yellow;
 }
+.message-validate {
+	color: red;
+}
 .negrito {
 	font-weight: bold;
 }

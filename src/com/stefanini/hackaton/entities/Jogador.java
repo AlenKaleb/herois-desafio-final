@@ -15,12 +15,17 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 import com.stefanini.hackaton.annotations.NotNull;
+import com.stefanini.hackaton.dto.HeroiDto;
 
 
 @NamedQueries({ 
-	@NamedQuery(name = "Jogador.getAll", query = "SELECT j FROM Jogador j")
-//	@NamedQuery(name = "Pessoa.findByCpf", 
-//	query = "SELECT p FROM Pessoa p WHERE p.cpf = :cpf")
+	@NamedQuery(name = "Jogador.getAll", query = "SELECT j FROM Jogador j"),
+	@NamedQuery(name = "Jogador.autenticator", 
+	query = "SELECT j FROM Jogador j WHERE j.nickname = :nickname AND j.senha = :senha"),
+	@NamedQuery(name = "Jogador.findUserByNickname", 
+	query = "SELECT j FROM Jogador j WHERE j.nickname = :nickname"),
+	@NamedQuery(name = "Jogador.findUserDifById", 
+	query = "SELECT j FROM Jogador j WHERE j.id <> :id")
 })
 @Entity
 @Table(name = "jogador")
@@ -40,10 +45,19 @@ public class Jogador implements Serializable{
 	private String senha;
 	
 	@NotNull
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="idHeroi")
 	private Heroi personagem;
 
+	public Jogador() {
+		
+	}
+	
+	public Jogador(Integer id, String nickname) {
+		setId(id);
+		setNickname(nickname);
+	}
+	
 	public Integer getId() {
 		return id;
 	}

@@ -7,6 +7,7 @@ import javax.inject.Inject;
 import org.apache.webbeans.util.StringUtil;
 
 import com.stefanini.hackaton.dto.JogadorDto;
+import com.stefanini.hackaton.entities.Jogador;
 import com.stefanini.hackaton.parsers.JogadorParserDTO;
 import com.stefanini.hackaton.persistence.JogadorDAO;
 import com.stefanini.hackaton.rest.exceptions.NegocioException;
@@ -14,14 +15,25 @@ import com.stefanini.hackaton.rest.exceptions.NegocioException;
 public class JogadorService {
 
 	@Inject
-	JogadorParserDTO parser;
+	private JogadorParserDTO parser;
 	
 	@Inject
-	JogadorDAO jogadorDao;
+	private JogadorDAO jogadorDao;
 
 
 	public List<JogadorDto> listar() {
-		return parser.toDTO(jogadorDao.list());
+		List<JogadorDto> listaJogadorDto =  parser.toDTO(jogadorDao.list());
+		return listaJogadorDto;
+	}
+	
+	public List<JogadorDto> listarJogadoresDifId(Integer id) throws NegocioException {
+		List<JogadorDto> listaJogadorDto = parser.toDTO(jogadorDao.listarJogadoresDifId(id));
+		listaJogadorDto.add(0, parser.toDTO(new Jogador(0, "Maquina")));
+		return listaJogadorDto;
+	}
+	
+	public JogadorDto findByJogador(Integer id) {
+		return parser.toDTO(jogadorDao.findById(id));
 	}
 	
 	public void inserir(JogadorDto jogadorDto) throws NegocioException {
@@ -33,12 +45,24 @@ public class JogadorService {
 			throw new NegocioException("Senha nao informada");
 		}
 		
-		if(StringUtil.isBlank(jogadorDto.getPersonagem().toString())) {
+		if(jogadorDto.getPersonagem() == null) {
 			throw new NegocioException("Personagem não foi informado");
 		}
 		
-		jogadorDao.insert(parser.toEntity(jogadorDto));
+		if(!StringUtil.isBlank(isExistNickname(jogadorDto.getNickname()).getNickname())) {
+			throw new NegocioException("Este nickname já existe");
+		}
 		
+		jogadorDao.insert(parser.toEntity(jogadorDto));
 	}
+	
+	public JogadorDto isExistNickname(String nickname) throws NegocioException {
+		if(StringUtil.isBlank(nickname)) {
+			throw new NegocioException("Nickname nao verificado");
+		}
+		
+		return parser.toDTO(jogadorDao.getUser(nickname));
+	}
+	
 	
 }
